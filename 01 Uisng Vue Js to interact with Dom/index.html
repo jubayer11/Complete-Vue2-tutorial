@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo
+        {
+            width:100px;
+            height: 100px;
+            background-color: gray;
+            display: inline-block;
+            margin: 10px;
+        }
+        .red
+        {
+            background-color: red;
+        }
+        .blue
+        {
+            background-color: blue;
+        }
+        .green
+        {
+            background-color: green;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>{{title}}</p>
+    <p>{{sayHello()}}</p>
+    <a v-bind:href="hello.link" >hello</a>
+
+    <p v-text="text">hello</p>
+    <div v-html="html">in this tag</div>
+    <div v-show="false">v-show check</div>
+
+    <div v-if="x==1">1</div>
+    <div v-else-if="x==2">2</div>
+    <div v-else>3</div>
+
+<!--    v-for-->
+    <div v-for="(item,index) in itemsArray">
+        {{index}}-{{ item }}
+    </div>
+    <div v-for="(value, name, index) in object">
+        value-{{value}} - name-{{name}} - index-{{index}}
+    </div>
+    <input @keyup.enter="onEnter('hello honey')" />
+    <div>{{onEnter1}}</div>
+
+<!--    //v-slot-->
+    <!-- Named slot that receives props -->
+    <div>
+        <template v-slot:item="slotProps">
+            <div class="item">
+                {{ slotProps.item.text }}
+            </div>
+        </template>
+    </div>
+
+<!--    v-once-->
+    <div v-once>
+        <h1>comment</h1>
+        <p>{{msg}}</p>
+    </div>
+    <button @click="msg='change v-once'">v-once</button>
+
+
+    <div>
+        <div @click="increase(2)">click</div>
+        <button @click="counter++">click </button>
+
+        <p>{{counter*2>10? 'greater than 10':'less than 10'}}</p>
+        <div @click="secondCounter++">{{secondCounter}}</div>
+        <p>{{result()}} || {{output}}</p>
+        <p @mousemove="updateCoordinates">coordinets:{{xy}}-{{yz}}
+            <span @mousemove.self.stop>Dead Spot</span>
+        </p>
+    </div>
+
+    <div>
+        <input type="text" @keyup.enter.space="alertMe">
+    </div>
+
+    <div>
+        <div @click="attachRed=!attachRed" class="demo" :class="{red:attachRed}"></div>
+        <div class="demo" :class="[divClasses,green]"></div>
+        <div class="demo" :style="[{backgroundColor:color},{height:10+'px'}]"></div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            title:'hello world!',
+            hello:{
+                name:'jubayer',
+                age:'20',
+                link:'www.google.com'
+            },
+            text:'hello there',
+            html:`<h1> checking v-html</h1>`,
+            x:8,
+            itemsArray:[1,2,3,4],
+            object:
+                {
+                    name:'jubayer',
+                    age:26,
+                    height:'58'
+                },
+            onEnter1:'hello',
+            slotProps:{
+                item:{
+                    text:'slot checking'
+
+                }
+            },
+            msg:'hello v-once',
+            count:0,
+            xy:'',
+            yz:'',
+            counter:0,
+            secondCounter:0,
+            attachRed:false,
+            color:'yellow',
+            green:'green',
+        },
+        watch:{
+            counter(value)
+            {
+               //logic on the new value
+                var vm=this;
+                setTimeout(()=>
+                {
+
+                    vm.counter=0;
+
+                },2000);
+
+            }
+        },
+        methods:{
+          sayHello()
+          {
+              return this.myname;
+          },
+            onEnter(abc)
+            {
+                this.onEnter1=abc;
+            },
+
+            myname()
+            {
+                this.text='john cena';
+                return this.title;
+            },
+            increase(num)
+            {
+                this.counter+=this.counter+num;
+            },
+            updateCoordinates(event)
+            {
+                this.xy=event.clientX;
+                this.yz=event.clientY;
+            },
+            dummy(event)
+            {
+                event.stopPropagation();
+            },
+            alertMe()
+            {
+                alert('Alert');
+            },
+            result()
+            {
+                console.log('method');
+                return this.counter*2>10? 'greater than 10':'smaller than 10';
+            }
+
+        },
+
+        computed:{
+          output()
+          {
+              console.log('computed');
+              return this.counter*2>10? 'greater than 10':'smaller than 10';
+          },
+            outputThird()
+            {
+             console.log('secondComputed');
+            },
+            divClasses()
+            {
+                return {
+                    red: this.attachRed,
+                    blue: !this.attachRed,
+                };
+
+            }
+        },
+    });
+</script>
+</body>
+</html>

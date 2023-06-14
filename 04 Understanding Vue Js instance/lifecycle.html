@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app20">
+    <h1>{{title}}</h1>
+    <button @click="changedTitle">Update Title</button>
+    <button @click="destroy">Destroy</button>
+
+</div>
+
+<script>
+    new Vue({
+        el:'#app20',
+        data:{
+            title:'The Vue Js Instance',
+        },
+        beforeCreate()
+        {
+            console.log('beforeCreate()');
+        },
+        created()
+        {
+            console.log('created()');
+        },
+        beforeMount()
+        {
+            console.log('beforeMount()');
+        },
+        mounted()
+        {
+            console.log('mounted()');
+        },
+        beforeUpdate()
+        {
+            console.log('beforeUpdate()');
+        },
+        updated()
+        {
+            console.log('updated()');
+        },
+        beforeDestroy()
+        {
+            console.log(' beforeDestroy()');
+        },
+        destroyed()
+        {
+            console.log('destroyed()');
+        },
+        methods:{
+            destroy()
+            {
+               this.$destroy();
+            },
+            changedTitle()
+            {
+                this.title='changed';
+            }
+        },
+
+
+
+
+    });
+</script>
+</body>
+</html>

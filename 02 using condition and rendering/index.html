@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+
+    <div>
+        <div v-if="x==1">1</div>
+        <div v-else-if="x==2">2</div>
+        <div v-else>0</div>
+
+    </div>
+    <template v-if="x==0">
+        <div>0 again</div>
+        <div>yes, it's 0</div>
+    </template>
+
+    <div>
+        <div v-show="x==5">no, it's 5</div>
+    </div>
+
+    <div>
+        <ul>
+            <li v-for="(color,index) in colors" :key="color">{{color}}-{{index}}</li>
+        </ul>
+    </div>
+
+    <template v-for="items in bioData">
+        <div v-for="(value,key,index) in items">
+            {{key}}-{{value}}-{{index}}
+        </div>
+    </template>
+
+    <div v-for="n in 10">{{n}}</div>
+
+    <button @click="colors.push('green')">push</button>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            x:0,
+            colors:['red','yellow','blue','pink'],
+
+            bioData:[
+                {'name':'sazzad',age:'27',gender:'male'},
+                {name:'jubayer',age:26,gender:'male'}
+            ],
+        },
+
+
+    });
+</script>
+</body>
+</html>
